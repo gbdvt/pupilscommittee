@@ -28,7 +28,7 @@ const NewItem = (props) => {
     const [status, setStatus] = useState(undefined)
     const [images, setImages] = useState({})
     const [colors, setColors] = useState("")
-    const [stock, setStock] = useState({})
+    // const [stock, setStock] = useState({})
 
     const history = useHistory()
 
@@ -41,7 +41,6 @@ const NewItem = (props) => {
             price: parseInt(Math.ceil(price * 100)),
             sizes: sizes.split(', ').map(size => size.trim()),
             images: Object.keys(images).map(key => images[key]),
-            stock,
             colors: colors.split(', ').map(size => size.trim())
         }, {
             headers: {
@@ -111,7 +110,7 @@ const NewItem = (props) => {
                 <TextArea value={sizes} onChange={setSizes} placeholder={"Enter the sizes, separated by a comma and a space ', '"} label={"Sizes:"} />
                 <TextArea value={colors} onChange={setColors} placeholder={"Enter the sizes, separated by a comma and a space ', '"} label={"Colors:"} />
                 <MultipleImageUplaod label={'Image Upload'} single={false} handleImageChange={handleImageChange} />
-                <StockMatrix stock={stock} setStock={setStock} sizes={sizes.split(', ').map(size => size.trim()).filter(el => el != "")} colors={colors.split(', ').map(size => size.trim()).filter(el => el != "")} />
+                {/* <StockMatrix stock={stock} setStock={setStock} sizes={sizes.split(', ').map(size => size.trim()).filter(el => el != "")} colors={colors.split(', ').map(size => size.trim()).filter(el => el != "")} /> */}
                 <SimpleButton disabled={status == "loading"} submit={RequestSave} >Save   <FontAwesomeIcon icon={faCloudUploadAlt} /></SimpleButton>
             </form>
         </div>

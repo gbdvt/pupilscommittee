@@ -5,17 +5,7 @@ const Order = require('../../db/Models/Order')
 const Item = require('../../db/Models/Item')
 const User = require('../../db/Models/User')
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
-const nodemailer = require("nodemailer");
-const email = require('../../Mail/Templates/NewOrder')
-const moment = require('moment');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MailAddress,
-    pass: process.env.MailPassword
-  }
-});
 
 
 router.post('/buy', nonAdminAuth, async (req, res) => {

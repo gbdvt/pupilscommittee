@@ -8,23 +8,23 @@ const Item = require('../../db/Models/Item')
 router.post('/saveItem', AdminAuth, async (req, res) => {
   try {
     data = req.body
-    stock = {}
-    data.sizes.forEach(size => {
-      stock[size] = {}
-      data.colors.forEach(color => {
-        try {
-          if (data.stock[size][color] !== undefined) {
-            stock[size][color] = data.stock[size][color]
-          } else {
-            stock[size][color] = true
-          }
-        } catch (e) {
-          stock[size][color] = true
-        }
-      })
-    })
-    console.log(data)
-    item = new Item({ ...data, author: req.user, stock })
+    // stock = {}
+    // data.sizes.forEach(size => {
+    //   stock[size] = {}
+    //   data.colors.forEach(color => {
+    //     try {
+    //       if (data.stock[size][color] !== undefined) {
+    //         stock[size][color] = data.stock[size][color]
+    //       } else {
+    //         stock[size][color] = true
+    //       }
+    //     } catch (e) {
+    //       stock[size][color] = true
+    //     }
+    //   })
+    // })
+    // console.log(data)
+    item = new Item({ ...data, author: req.user })
     await item.save()
     res.status(200)
     res.send(item._id)

@@ -20,7 +20,7 @@ const ModStock = (props) => {
     const history = useHistory()
     const { id } = useParams()
     const [data, setData] = useState({})
-    const [stock, setStock] = useState({})
+    // const [stock, setStock] = useState({})
     const [status, setStatus] = useState('loading')
     const [actionStatus, setActionStatus] = useState(undefined)
 
@@ -37,7 +37,7 @@ const ModStock = (props) => {
         const response = await axios.get(`/api/items/fetchItem?id=${id}`)
         if (response && response.status === 200) {
             setData({ thumb: response.data.thumbnail, title: response.data.title, id: response.data._id, colors: response.data.colors, sizes: response.data.sizes })
-            setStock(response.data.stock)
+            // setStock(response.data.stock)
             setTitle(response.data.title)
             setDescription(response.data.description)
             setPrice((response.data.price / 100).toLocaleString("es", {style:"currency", currency:"EUR"}))
@@ -49,7 +49,6 @@ const ModStock = (props) => {
         setActionStatus('loading')
         const response = await axios.post('/api/items/update', {
             id: data.id,
-            stock,
             title,
             description,
             price: parseFloat(price.replace(",", ".")) * 100
@@ -84,7 +83,7 @@ const ModStock = (props) => {
                 <SimpleInput value={price} onChange={setPrice} label={"Price"} placeholder={"Enter a new price"} />
             </div>
 
-            <StockMatrix load={stock} sizes={data.sizes} colors={data.colors} stock={stock} setStock={setStock} />
+            {/* <StockMatrix load={stock} sizes={data.sizes} colors={data.colors} stock={stock} setStock={setStock} /> */}
             <div className={styles.buttonContainer}>
                 <Button disabled={actionStatus == "loading"} submit={SaveItem}>Save   <FontAwesomeIcon icon={faSave} /></Button>
             </div>
