@@ -49,13 +49,27 @@ const SingleOrder = (props) => {
 
     const FulfillOrder = async () => {
         setActionStatus("loading")
-        const response = await axios.get(`/api/orders/ship?id=${id}`, {
+        const response = await axios.get(`/api/orders/deliver?id=${id}`, {
             headers: {
                 authorization: props.redux.auth.token
             }
         })
         if (response && response.status === 200) {
-            toast.success("Order has been shipped")
+            toast.success("Order has been delivered")
+            setActionStatus(undefined)
+            history.goBack()
+        }
+    }
+
+    const PayOrder = async () => {
+        setActionStatus("loading")
+        const response = await axios.get(`/api/orders/pay?id=${id}`, {
+            headers: {
+                authorization: props.redux.auth.token
+            }
+        })
+        if (response && response.status === 200) {
+            toast.success("Order has been marked as paid")
             setActionStatus(undefined)
             history.goBack()
         }
@@ -120,7 +134,7 @@ const SingleOrder = (props) => {
                     </div>
                     {data.order.map(order => <SingleItem order={order} />)}
                 </div>
-                <Actions orderStatus={data.status} return={ReturnOrder} ship={FulfillOrder} cancel={CancelOrder} status={actionStatus} admin={props.redux.auth.isAdmin} />
+                <Actions orderStatus={data.status} pay={PayOrder} return={ReturnOrder} ship={FulfillOrder} cancel={CancelOrder} status={actionStatus} admin={props.redux.auth.isAdmin} />
             </div>
         )
     }

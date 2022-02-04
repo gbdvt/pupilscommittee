@@ -37,8 +37,9 @@ router.get('/', AdminAuth, async (req, res) => {
             ordersBySize[color] = {}
             item.sizes.forEach(size => {
                 ordersBySize[color][size] = {
-                    InProgress: 0,
-                    Shipped: 0,
+                    Ordered: 0,
+                    Paid: 0,
+                    Delivered: 0,
                     Cancelled: 0,
                     Returned: 0
                 }

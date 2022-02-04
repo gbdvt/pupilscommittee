@@ -9,7 +9,7 @@ const OrderSchema = new mongoose.Schema({
     color: String,
     status: {
         type: String,
-        default: "InProgress"
+        default: "Ordered"
     },
     createdAt: {
         type: Date,

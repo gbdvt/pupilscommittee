@@ -4,7 +4,6 @@ const { nonAdminAuth, AdminAuth } = require('../../Middleware/Auth')
 const Order = require('../../db/Models/Order')
 const Item = require('../../db/Models/Item')
 const User = require('../../db/Models/User')
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
 
 
@@ -18,14 +17,6 @@ router.post('/buy', nonAdminAuth, async (req, res) => {
     const items = docs[1]
 
     const amount =  items.reduce((acc, item) => acc + item.price * data.order.find(order => order.item == item._id).quantity, 0)
-    const payment = await stripe.charges.create({
-      amount: amount,
-      currency: "EUR",
-      description: "Vendemos camisetas personalizadas",
-      // payment_method: data.token.card.id,
-      // confirm: true,
-      source: data.token.id
-    });
     order = new Order({ order: data.order, author: req.user.data, authorData: user, amount, shipment: data.addresses, charge: {id: payment.id, amount: payment.amount, createdAt: payment.created} })
     await order.save()
     res.status(200)
@@ -44,6 +35,7 @@ router.post('/buyInPerson', nonAdminAuth, async (req, res) => {
   try {
     const user_id = req.user.data
     const data = req.body
+    console.log(data)
     const docs = await Promise.all([User.findById(user_id).select(" -__v -password").exec(), Item.find({'_id': { $in: data.order.map(order => order.item) }}).exec()])
 
     const user = docs[0]
@@ -100,16 +92,24 @@ router.post('/loadAllOrders', AdminAuth, async (req, res) => {
   }
 })
 
-router.get('/ship', AdminAuth, async (req, res) => {
+router.get('/deliver', AdminAuth, async (req, res) => {
   const id = req.query.id
-  const order = await Order.findByIdAndUpdate(id, { status: "Shipped" })
+  const order = await Order.findByIdAndUpdate(id, { status: "Delivered" })
 
   res.status(200)
-  res.send("Order has been shipped")
+  res.send("Order has been delivered")
 
-  const items = await Item.find({'_id': { $in: order.order.map(order => order.item) }}).exec()
+  // const items = await Item.find({'_id': { $in: order.order.map(order => order.item) }}).exec()
+})
 
+router.get('/pay', AdminAuth, async (req, res) => {
+  const id = req.query.id
+  const order = await Order.findByIdAndUpdate(id, { status: "Paid" })
 
+  res.status(200)
+  res.send("Order has been Paid")
+
+  // const items = await Item.find({'_id': { $in: order.order.map(order => order.item) }}).exec()
 })
 
 router.get('/return', AdminAuth, async (req, res) => {
@@ -117,17 +117,11 @@ router.get('/return', AdminAuth, async (req, res) => {
     id = req.query.id
   const order = await Order.findById(id)
 
-  if (order.charge != "In Person") {
-    await stripe.refunds.create({
-      charge: order.charge.id,
-    });
-  }
-
   order.status = "Returned"
   await order.save()
 
   res.status(200)
-  res.send("Order has been returned, and the payment has been refunded")
+  res.send("Order has been returned")
 
   const items = await Item.find({'_id': { $in: order.order.map(order => order.item) }}).exec()
 
@@ -152,23 +146,14 @@ router.get('/cancel', nonAdminAuth, async (req, res) => {
     res.send("Not Authorized")
   }
 
-  if (order.charge != "In Person") {
-    await stripe.refunds.create({
-      charge: order.charge.id,
-    });
-  }
-
   order.status = "Cancelled"
   await order.save()
 
   res.status(200)
-  res.send("Cancelled Order, and refunded the aount paid")
+  res.send("Cancelled Order")
 
   const items = await Item.find({'_id': { $in: order.order.map(order => order.item) }}).exec()
 
-
-
-  console.log(info)
 
   } catch (e) {
     console.log(e)

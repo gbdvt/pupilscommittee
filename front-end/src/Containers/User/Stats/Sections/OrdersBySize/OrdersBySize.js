@@ -29,7 +29,6 @@ const Overview = (props) => {
                         <div className={styles.initInfo}>
                             <h2>{item.title}</h2>
                             <img src={item.thumb} />
-                            <Link to={`/user/modStock/${item.id}`}>Modify Stock</Link>
                         </div>
                         {Object.values(objectMap(item.ordersBySize, (ordersByColor, color) => (
                             <div>
