@@ -19,11 +19,6 @@ const userSchema = new mongoose.Schema({
         minlength: 3,
         required: true
     },
-    phoneNumber: {
-        type: String,
-        required: true,
-        unique: true
-    },
     isAdmin: {type: Boolean, default: false},
     createdAt: {
         type: Date,

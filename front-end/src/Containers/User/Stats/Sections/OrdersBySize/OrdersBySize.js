@@ -36,8 +36,9 @@ const Overview = (props) => {
                                 <table className={styles.mainTable}>
                                     <tr>
                                         <th>Size</th>
-                                        <th>In progress</th>
-                                        <th>Shipped</th>
+                                        <th>Ordered</th>
+                                        <th>Paid</th>
+                                        <th>Delivered</th>
                                         <th>Cancelled</th>
                                         <th>Returned</th>
                                         <th>Total</th>
@@ -45,11 +46,12 @@ const Overview = (props) => {
                                     {Object.values(objectMap(ordersByColor, (orders, size) => (
                                         <tr className={styles.row}>
                                             <td>{size}</td>
-                                            <td>{orders.InProgress}</td>
-                                            <td>{orders.Shipped}</td>
+                                            <td>{orders.Ordered}</td>
+                                            <td>{orders.Paid}</td>
+                                            <td>{orders.Delivered}</td>
                                             <td>{orders.Cancelled}</td>
                                             <td>{orders.Returned}</td>
-                                            <td>{orders.InProgress + orders.Shipped + orders.Cancelled + orders.Returned}</td>
+                                            <td>{orders.Ordered + orders.Paid + orders.Delivered + orders.Cancelled + orders.Returned}</td>
                                         </tr>
                                     )))}
                                 </table>

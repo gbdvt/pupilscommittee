@@ -116,7 +116,6 @@ const SingleOrder = (props) => {
                     <h2>Customer Details:</h2>
                     <div className={styles.textInfoContainer}><h3>Name:</h3> <h3>{data.authorData.name}</h3></div>
                     <div className={styles.textInfoContainer}><h3>E-mail:</h3> <h3>{data.authorData.email}</h3></div>
-                    <div className={styles.textInfoContainer}><h3>Phone Number:</h3> <h3>{data.authorData.phoneNumber}</h3></div>
                 </div>
                 <div className={styles.sectionContainer}>
                     <h2>Shipment Details:</h2>
