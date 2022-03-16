@@ -26,11 +26,10 @@ const Nav = (props) => {
                     <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
                 </nav>
             </div>
-            <div className={styles.navMobileContainer} style={{height: menuOpen ? "12.5em" : "0"}}>
+            <div className={styles.navMobileContainer} style={{height: menuOpen ? "10em" : "0"}}>
                 <nav className={styles.navMobileInnerContainer}>
                     <span><NavLink onClick={() => setOpen(false)} className={styles.navLink} to={'/'}><FontAwesomeIcon icon={faHome} />Home</NavLink></span>
                     <span><NavLink onClick={() => setOpen(false)} className={styles.navLink} to={'/store'}><FontAwesomeIcon icon={faShoppingCart} /> Store</NavLink></span>
-                    <span><NavLink onClick={() => setOpen(false)} className={styles.navLink} to={'/about'}><FontAwesomeIcon icon={faInfoCircle} /> About</NavLink></span>
                     <span><NavLink onClick={() => setOpen(false)} className={styles.navLink} to={props.redux.auth.isLoggedIn ? "/user" : '/auth/login'}><FontAwesomeIcon icon={faAddressCard} /> {props.redux.auth.isLoggedIn ? "My account" : "Log in"}</NavLink></span>
                 </nav>
             </div>
