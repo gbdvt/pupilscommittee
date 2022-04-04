@@ -113,7 +113,7 @@ const Cart = (props) => {
             <div className={styles.buttonGrid}>
                 
                 <center>
-                <Button disabled={status == "loading"} submit={buyInPerson}>Pay in person   <FontAwesomeIcon icon={faHandHoldingUsd} /></Button></center>
+                <Button disabled={status == "loading"} submit={buyInPerson}>Pay at school   <FontAwesomeIcon icon={faHandHoldingUsd} /></Button></center>
                 <div className={styles.clearButton}><Button  submit={() => props.dispatch(ClearCart())}><span style={{ color: "red" }}>Clear Cart <FontAwesomeIcon icon={faTrashAlt} /></span></Button></div>
             </div>
         </div>
