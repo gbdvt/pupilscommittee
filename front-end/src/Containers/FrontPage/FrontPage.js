@@ -19,7 +19,7 @@ const FrontPage = () => {
     return (
         <div>
             <div className={styles.textContainer}>
-                <p>An updated design of the website will come out soon. <br></br> For now, buy the merch in the store.</p>
+                <p>Please order by clicking on "store" in the top right corner.<br></br> For now, buy the merch in the store.</p>
             </div>
         </div>
     )
